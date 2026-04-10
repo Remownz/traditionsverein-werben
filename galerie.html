@@ -240,23 +240,7 @@
 <!-- ══ Gallery ══ -->
 <div class="section-wrap">
 
-    <div class="gallery-grid" id="gallery-grid">
-
-        <div class="gallery-item"><img src="images/IMG-20250831-WA0014.jpg" alt="Vereinsleben"></div>
-        <div class="gallery-item"><img src="images/IMG-20250831-WA0029.jpg" alt="Vereinsleben"></div>
-        <div class="gallery-item"><img src="images/IMG-20250831-WA0034.jpg" alt="Vereinsleben"></div>
-        <div class="gallery-item"><img src="images/IMG-20250831-WA0043.jpg" alt="Vereinsleben"></div>
-        <div class="gallery-item"><img src="images/IMG-20251216-WA0005.jpg" alt="Vereinsleben"></div>
-        <div class="gallery-item"><img src="images/IMG-20260117-WA0030.jpg" alt="Vereinsleben"></div>
-        <div class="gallery-item"><img src="images/IMG-20260117-WA0051.jpg" alt="Vereinsleben"></div>
-        <div class="gallery-item"><img src="images/IMG-20260117-WA0062.jpg" alt="Vereinsleben"></div>
-        <div class="gallery-item"><img src="images/IMG-20260130-WA0001.jpg" alt="Vereinsleben"></div>
-        <div class="gallery-item"><img src="images/IMG_20260207_145845.jpg" alt="Vereinsleben"></div>
-        <div class="gallery-item"><img src="images/IMG-20260209-WA0000.jpg" alt="Vereinsleben"></div>
-        <div class="gallery-item"><img src="images/IMG_20260214_010343.jpg" alt="Vereinsleben"></div>
-        <div class="gallery-item"><img src="images/IMG-20260329-WA0016.jpg" alt="Vereinsleben"></div>
-
-    </div>
+    <div class="gallery-grid" id="gallery-grid"></div>
 </div>
 
 <!-- ══ Footer ══ -->
@@ -283,13 +267,11 @@
     });
 
     /* ── Lightbox ── */
-    document.querySelectorAll('.gallery-item img').forEach(img => {
-        img.addEventListener('click', () => {
-            document.getElementById('lightbox-img').src = img.src;
-            document.getElementById('lightbox-caption').textContent = img.alt;
-            document.getElementById('lightbox').classList.add('active');
-        });
-    });
+    function openLightbox(src, caption) {
+        document.getElementById('lightbox-img').src = src;
+        document.getElementById('lightbox-caption').textContent = caption;
+        document.getElementById('lightbox').classList.add('active');
+    }
 
     function closeLightbox() {
         document.getElementById('lightbox').classList.remove('active');
@@ -298,6 +280,41 @@
     document.addEventListener('keydown', e => {
         if (e.key === 'Escape') closeLightbox();
     });
+
+    /* ── Gallery: load from galerie.md ── */
+    function parseGalleryMarkdown(text) {
+        const images = [];
+        const regex = /!\[([^\]]*)\]\(([^)]+)\)/g;
+        let match;
+        while ((match = regex.exec(text)) !== null) {
+            images.push({ alt: match[1], src: match[2] });
+        }
+        return images;
+    }
+
+    async function loadGallery() {
+        const grid = document.getElementById('gallery-grid');
+        try {
+            const response = await fetch('galerie.md');
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const text = await response.text();
+            const images = parseGalleryMarkdown(text);
+            if (images.length === 0) {
+                grid.innerHTML = '<p style="font-family:Arial,sans-serif;color:#888;">Keine Bilder vorhanden.</p>';
+                return;
+            }
+            grid.innerHTML = images.map(img =>
+                `<div class="gallery-item">
+                    <img src="${img.src}" alt="${img.alt}" onclick="openLightbox('${img.src}', '${img.alt.replace(/'/g, "\\'")}')">
+                </div>`
+            ).join('');
+        } catch (err) {
+            console.error('Error loading gallery:', err);
+            grid.innerHTML = '<p style="font-family:Arial,sans-serif;color:#888;">Galerie konnte nicht geladen werden.</p>';
+        }
+    }
+
+    loadGallery();
 </script>
 
 </body>

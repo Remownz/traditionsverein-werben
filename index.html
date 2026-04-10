@@ -278,6 +278,38 @@
         .gallery-placeholder svg { width: 38px; height: 38px; opacity: 0.45; margin-bottom: 0.5rem; }
         .gallery-placeholder span { font-size: 0.78rem; opacity: 0.55; font-family: Arial, sans-serif; }
 
+        /* ── Lightbox ── */
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.92);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .lightbox.active { display: flex; }
+        .lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 6px; }
+        .lightbox-close {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            color: white;
+            font-size: 2.5rem;
+            cursor: pointer;
+            line-height: 1;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+        .lightbox-close:hover { opacity: 1; }
+        .lightbox-caption {
+            position: absolute;
+            bottom: 1.5rem;
+            color: rgba(255,255,255,0.7);
+            font-family: Arial, sans-serif;
+            font-size: 0.85rem;
+        }
+
         /* ── Contact ── */
         #kontakt { background: white; }
         #kontakt .section-wrap { padding-top: 4rem; padding-bottom: 4rem; }
@@ -648,6 +680,13 @@
     </div>
 </div>
 
+<!-- ══ Lightbox ══ -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close" title="Schließen">&times;</span>
+    <img id="lightbox-img" src="" alt="Galeriebild">
+    <span class="lightbox-caption" id="lightbox-caption"></span>
+</div>
+
 <!-- ══ Footer ══ -->
 <footer>
     &copy; 2026 Traditionsverein Werben im Spreewald e.&nbsp;V. &nbsp;·&nbsp; Alle Rechte vorbehalten.
@@ -751,6 +790,26 @@
     }
 
     loadEvents();
+
+    /* ── Lightbox ── */
+    function openLightbox(src, caption) {
+        document.getElementById('lightbox-img').src = src;
+        document.getElementById('lightbox-caption').textContent = caption;
+        document.getElementById('lightbox').classList.add('active');
+    }
+
+    function closeLightbox() {
+        document.getElementById('lightbox').classList.remove('active');
+    }
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeLightbox();
+    });
+
+    document.querySelectorAll('.gallery-teaser .gallery-item img').forEach(img => {
+        img.style.cursor = 'pointer';
+        img.addEventListener('click', () => openLightbox(img.src, img.alt));
+    });
 
     /* ── Contact form → mailto ── */
     function submitForm(e) {
