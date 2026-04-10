@@ -8,6 +8,7 @@
         if (sessionStorage.getItem('auth') !== '1') {
             document.addEventListener('DOMContentLoaded', function () {
                 document.body.style.visibility = 'hidden';
+                document.body.style.overflow = 'hidden';
                 const overlay = document.getElementById('pw-overlay');
                 overlay.style.display = 'flex';
                 overlay.style.visibility = 'visible';
@@ -288,6 +289,7 @@
             sessionStorage.setItem('auth', '1');
             document.getElementById('pw-overlay').style.display = 'none';
             document.body.style.visibility = 'visible';
+            document.body.style.overflow = '';
         } else {
             document.getElementById('pw-error').textContent = 'Falsches Passwort.';
             document.getElementById('pw-input').value = '';
