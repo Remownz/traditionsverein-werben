@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traditionsverein Werben im Spreewald e.V.</title>
+    <style>
+        :root {
+            --green-dark: #2d5a27;
+            --green-mid: #4a7c3f;
+            --green-light: #7ab648;
+            --cream: #f5f0e8;
+            --text: #333;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Georgia', serif;
+            color: var(--text);
+            background: var(--cream);
+        }
+
+        /* ── Navigation ── */
+        nav {
+            background: var(--green-dark);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        nav .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.5rem;
+        }
+        nav .logo {
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 1rem 0;
+            text-decoration: none;
+        }
+        nav ul { list-style: none; display: flex; }
+        nav ul li a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 1rem 1.1rem;
+            transition: background 0.2s;
+            font-family: Arial, sans-serif;
+            font-size: 0.88rem;
+            letter-spacing: 0.3px;
+        }
+        nav ul li a:hover { background: var(--green-mid); }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            padding: 0.5rem;
+            background: none;
+            border: none;
+        }
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: white;
+            border-radius: 3px;
+        }
+
+        /* ── Hero ── */
+        header {
+            background: linear-gradient(150deg, var(--green-dark) 0%, var(--green-mid) 55%, #6aaa38 100%);
+            color: white;
+            text-align: center;
+            padding: 6rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: var(--cream);
+            clip-path: ellipse(55% 100% at 50% 100%);
+        }
+        header h1 {
+            font-size: 2.6rem;
+            margin-bottom: 0.8rem;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.35);
+        }
+        header p {
+            font-size: 1.15rem;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        /* ── Generic section ── */
+        .section-wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--green-dark);
+            margin-bottom: 0.4rem;
+            display: inline-block;
+            border-bottom: 3px solid var(--green-light);
+            padding-bottom: 0.4rem;
+        }
+        .section-sub {
+            color: #777;
+            font-family: Arial, sans-serif;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        /* ── About ── */
+        #ueber-uns p {
+            font-family: Arial, sans-serif;
+            line-height: 1.9;
+            color: #555;
+            max-width: 780px;
+            font-size: 0.97rem;
+            margin-bottom: 1rem;
+        }
+
+        .stats-bar {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 2.5rem;
+        }
+        .stat-item {
+            background: white;
+            border-radius: 10px;
+            padding: 1.2rem 1.8rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+            text-align: center;
+            min-width: 130px;
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--green-dark);
+            line-height: 1;
+        }
+        .stat-label {
+            font-family: Arial, sans-serif;
+            font-size: 0.78rem;
+            color: #888;
+            margin-top: 0.3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .history-title {
+            font-size: 1.1rem;
+            color: var(--green-dark);
+            margin: 1.8rem 0 0.5rem;
+            font-family: 'Georgia', serif;
+        }
+
+        /* ── Gallery teaser ── */
+        .gallery-teaser {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* ── Events ── */
+        #termine { background: white; }
+        #termine .section-wrap { padding-top: 4rem; padding-bottom: 4rem; }
+
+        .event-card {
+            background: var(--cream);
+            border-left: 5px solid var(--green-light);
+            border-radius: 0 10px 10px 0;
+            padding: 1.5rem 1.8rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 1.5rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+        }
+        .event-date-box {
+            background: var(--green-dark);
+            color: white;
+            text-align: center;
+            min-width: 72px;
+            border-radius: 8px;
+            padding: 0.6rem 0.5rem;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .event-date-box .day   { font-size: 2rem; font-weight: bold; line-height: 1; }
+        .event-date-box .month { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.5px; margin-top: 2px; }
+        .event-date-box .year  { font-size: 0.68rem; opacity: 0.7; }
+
+        .event-content { flex: 1; }
+        .event-badge {
+            display: inline-block;
+            background: var(--green-light);
+            color: white;
+            font-size: 0.72rem;
+            padding: 0.18rem 0.65rem;
+            border-radius: 20px;
+            font-family: Arial, sans-serif;
+            margin-bottom: 0.45rem;
+        }
+        .event-content h3 {
+            color: var(--green-dark);
+            font-size: 1.18rem;
+            margin-bottom: 0.25rem;
+        }
+        .event-meta {
+            font-size: 0.82rem;
+            color: #999;
+            font-family: Arial, sans-serif;
+            margin-bottom: 0.6rem;
+        }
+        .event-content p {
+            font-size: 0.93rem;
+            line-height: 1.7;
+            color: #555;
+            font-family: Arial, sans-serif;
+        }
+
+        /* ── Gallery ── */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .gallery-item {
+            border-radius: 10px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            background: #dde8d8;
+        }
+        .gallery-item:hover {
+            transform: scale(1.025);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .gallery-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #c8dfc0 0%, #e0edd8 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--green-mid);
+        }
+        .gallery-placeholder svg { width: 38px; height: 38px; opacity: 0.45; margin-bottom: 0.5rem; }
+        .gallery-placeholder span { font-size: 0.78rem; opacity: 0.55; font-family: Arial, sans-serif; }
+
+        /* ── Contact ── */
+        #kontakt { background: white; }
+        #kontakt .section-wrap { padding-top: 4rem; padding-bottom: 4rem; }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 3rem;
+            margin-top: 2rem;
+            align-items: start;
+        }
+        .contact-info p {
+            font-family: Arial, sans-serif;
+            color: #555;
+            line-height: 1.8;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.9rem;
+            margin-bottom: 1.2rem;
+        }
+        .info-icon {
+            width: 38px;
+            height: 38px;
+            background: var(--green-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: white;
+            font-size: 1.1rem;
+        }
+        .info-text { font-family: Arial, sans-serif; font-size: 0.9rem; color: #555; line-height: 1.6; }
+        .info-text strong { color: var(--text); }
+
+        .form-group { margin-bottom: 1.1rem; }
+        .form-group label {
+            display: block;
+            font-family: Arial, sans-serif;
+            font-size: 0.82rem;
+            color: #555;
+            margin-bottom: 0.3rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1.5px solid #ddd;
+            border-radius: 7px;
+            font-family: Arial, sans-serif;
+            font-size: 0.95rem;
+            background: var(--cream);
+            transition: border-color 0.2s, box-shadow 0.2s;
+            color: var(--text);
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--green-light);
+            box-shadow: 0 0 0 3px rgba(122,182,72,0.15);
+        }
+        .form-group textarea { height: 130px; resize: vertical; }
+
+        .btn-submit {
+            background: var(--green-dark);
+            color: white;
+            border: none;
+            padding: 0.85rem 2.2rem;
+            font-size: 0.95rem;
+            border-radius: 7px;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+            letter-spacing: 0.5px;
+            transition: background 0.2s, transform 0.1s;
+        }
+        .btn-submit:hover { background: var(--green-mid); }
+        .btn-submit:active { transform: scale(0.98); }
+
+        .form-success {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem 1.2rem;
+            border-radius: 7px;
+            margin-top: 1rem;
+            font-family: Arial, sans-serif;
+            font-size: 0.92rem;
+        }
+
+        /* ── Impressum ── */
+        #impressum { background: var(--green-dark); color: white; }
+        #impressum .section-wrap { padding-top: 3.5rem; padding-bottom: 3rem; }
+        #impressum h2 { color: var(--green-light); margin-bottom: 2rem; font-size: 1.5rem; }
+
+        .impressum-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .impressum-grid h3 {
+            color: var(--green-light);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.6rem;
+            font-family: Arial, sans-serif;
+        }
+        .impressum-grid p {
+            font-family: Arial, sans-serif;
+            font-size: 0.9rem;
+            line-height: 1.85;
+            opacity: 0.85;
+        }
+        .impressum-legal {
+            margin-top: 2rem;
+            font-size: 0.78rem;
+            opacity: 0.5;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        /* ── Footer ── */
+        footer {
+            background: #1b3d16;
+            color: rgba(255,255,255,0.6);
+            text-align: center;
+            padding: 1.1rem;
+            font-family: Arial, sans-serif;
+            font-size: 0.8rem;
+        }
+
+        /* ── Responsive ── */
+        .btn-gallery-link {
+            display: inline-block;
+            background: var(--green-dark);
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1.8rem;
+            border-radius: 7px;
+            font-family: Arial, sans-serif;
+            font-size: 0.92rem;
+            transition: background 0.2s;
+        }
+        .btn-gallery-link:hover { background: var(--green-mid); }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 1.7rem; }
+            header p { font-size: 1rem; }
+
+            .hamburger { display: flex; }
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--green-dark);
+                box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            }
+            nav ul.open { display: flex; }
+            nav .nav-inner { position: relative; }
+            nav ul li a { padding: 0.9rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.08); }
+
+            .event-card { flex-direction: column; gap: 1rem; }
+            .event-date-box { flex-direction: row; gap: 0.6rem; align-items: center; padding: 0.5rem 1rem; justify-content: flex-start; }
+            .event-date-box .day { font-size: 1.4rem; }
+
+            .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .impressum-grid { grid-template-columns: 1fr; }
+            .stats-bar { gap: 1rem; }
+            .gallery-teaser { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ══ Navigation ══ -->
+<nav>
+    <div class="nav-inner">
+        <a href="#top" class="logo">Traditionsverein Werben</a>
+        <button class="hamburger" onclick="toggleMenu()" aria-label="Menü öffnen">
+            <span></span><span></span><span></span>
+        </button>
+        <ul id="nav-menu">
+            <li><a href="#ueber-uns">Über uns</a></li>
+            <li><a href="#termine">Termine</a></li>
+            <li><a href="galerie.html">Galerie</a></li>
+            <li><a href="#kontakt">Kontakt</a></li>
+            <li><a href="#impressum">Impressum</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- ══ Hero ══ -->
+<header id="top">
+    <h1>Traditionsverein Werben im Spreewald e.&nbsp;V.</h1>
+    <p>Gemeinsam Tradition leben – mitten im Herzen des Spreewaldes</p>
+</header>
+
+<!-- ══ About ══ -->
+<section id="ueber-uns">
+    <div class="section-wrap">
+        <h2 class="section-title">Über uns</h2>
+        <p class="section-sub">Gemeinschaft, Brauchtum und Heimatliebe</p>
+
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-number">125+</div>
+                <div class="stat-label">Mitglieder inkl. Jugend</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">1992</div>
+                <div class="stat-label">Gegründet</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">30+</div>
+                <div class="stat-label">Jahre Tradition</div>
+            </div>
+        </div>
+
+        <h3 class="history-title">Geschichte</h3>
+        <p>
+            Der Traditionsverein Werben im Spreewald e.&nbsp;V. wurde am 18.&nbsp;September 1992 im Sportlerheim
+            Werben gegründet. Zum ersten Vorstand gehörten Hartmut Hanschkatz (Vorsitzender), Henry Kahlisch,
+            Lutz Dreher, Burkhard Kohl, Joachim Liske, Heinz Ruben und Uwe Domaschenz. Die Jugendgruppe von
+            Werben ist Mitglied des Vereins. Der Verein hat sich die Aufgabe gestellt, alte Traditionen wieder
+            neu zu beleben und andere in alt hergebrachter Form weiterzuführen.
+        </p>
+        <p>
+            Anfang 2013 konnte der neue Vereinsraum im Haus „Seydlitz" bezogen werden. Zu den Veranstaltungen,
+            die der Verein organisiert, zählen: Jugendfastnacht, Männerfastnacht, Osterfeuer, Maibaum aufstellen,
+            Radpartie in die nähere Umgebung mit Grillabend, Teilnahme am Programm des Balls der Vereine,
+            Hahnrupfen, Kinderweihnachtsfeier und Mitgliederversammlungen.
+        </p>
+    </div>
+</section>
+
+<!-- ══ Events ══ -->
+<div id="termine">
+    <div class="section-wrap">
+        <h2 class="section-title">Termine &amp; Veranstaltungen</h2>
+        <p class="section-sub">Aktuelle Veranstaltungen des Vereins</p>
+
+        <div id="event-list">
+            <p style="font-family:Arial,sans-serif;color:#aaa;">Termine werden geladen …</p>
+        </div>
+
+    </div>
+</div>
+
+<!-- ══ Gallery teaser ══ -->
+<section id="galerie-teaser">
+    <div class="section-wrap">
+        <h2 class="section-title">Bildergalerie</h2>
+        <p class="section-sub">Eindrücke aus dem Vereinsleben</p>
+
+        <div class="gallery-teaser">
+            <div class="gallery-item">
+                <img src="images/IMG-20250831-WA0014.jpg" alt="Vereinsleben">
+            </div>
+            <div class="gallery-item">
+                <img src="images/IMG-20251216-WA0005.jpg" alt="Vereinsleben">
+            </div>
+            <div class="gallery-item">
+                <img src="images/IMG-20260117-WA0030.jpg" alt="Vereinsleben">
+            </div>
+        </div>
+
+        <a href="galerie.html" class="btn-gallery-link">Alle Fotos ansehen &rarr;</a>
+    </div>
+</section>
+
+<!-- ══ Contact ══ -->
+<div id="kontakt">
+    <div class="section-wrap">
+        <h2 class="section-title">Kontakt</h2>
+        <p class="section-sub">Schreiben Sie uns – wir freuen uns über Ihre Nachricht</p>
+
+        <div class="contact-grid">
+            <div class="contact-info">
+                <p>
+                    Sie haben Fragen zu unseren Veranstaltungen, möchten Mitglied werden oder einfach mehr über
+                    den Verein erfahren? Nutzen Sie das Kontaktformular – wir melden uns zeitnah bei Ihnen.
+                </p>
+                <div class="info-item">
+                    <div class="info-icon">&#127968;</div>
+                    <div class="info-text">
+                        <strong>Traditionsverein Werben im Spreewald e.&nbsp;V.</strong><br>
+                        Werben/Wjerbno, Spreewald<br>Brandenburg
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">&#9993;</div>
+                    <div class="info-text">
+                        <strong>Vorsitzende:</strong><br>
+                        Madeline Koalick
+                    </div>
+                </div>
+            </div>
+
+            <form class="contact-form" id="contact-form" onsubmit="submitForm(event)" novalidate>
+                <div class="form-group">
+                    <label for="name">Name *</label>
+                    <input type="text" id="name" name="name" required placeholder="Ihr vollständiger Name">
+                </div>
+                <div class="form-group">
+                    <label for="email">E-Mail-Adresse *</label>
+                    <input type="email" id="email" name="email" required placeholder="ihre@email.de">
+                </div>
+                <div class="form-group">
+                    <label for="betreff">Betreff</label>
+                    <input type="text" id="betreff" name="betreff" placeholder="Worum geht es?">
+                </div>
+                <div class="form-group">
+                    <label for="nachricht">Nachricht *</label>
+                    <textarea id="nachricht" name="nachricht" required placeholder="Ihre Nachricht an uns ..."></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Nachricht senden</button>
+                <div class="form-success" id="form-success">
+                    Vielen Dank! Ihr Mail-Programm sollte sich geöffnet haben. Bitte senden Sie die vorbereitete E-Mail ab.<br>
+                    Falls sich kein Mail-Programm geöffnet hat, schreiben Sie uns direkt an:
+                    <a href="mailto:traditionsvereinwerben@gmail.com">traditionsvereinwerben@gmail.com</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ══ Impressum ══ -->
+<div id="impressum">
+    <div class="section-wrap">
+        <h2>Impressum</h2>
+        <div class="impressum-grid">
+            <div>
+                <h3>Verein</h3>
+                <p>
+                    Traditionsverein Werben im Spreewald e.&nbsp;V.<br>
+                    Werben/Wjerbno<br>
+                    Spreewald, Brandenburg
+                </p>
+            </div>
+            <div>
+                <h3>Vorstand</h3>
+                <p>
+                    <strong>Vereinsvorsitzende:</strong> Madeline Koalick<br>
+                    <strong>Stellvertreterin:</strong> Maren Kobel<br>
+                    <strong>Kassenwart:</strong> Dirk Zander<br>
+                    <br>
+                    <strong>Weitere Vorstandsmitglieder:</strong><br>
+                    Petra Alexander, Susan Dieke,<br>
+                    Silka Schmidt, Uwe Domaschenz
+                </p>
+            </div>
+        </div>
+        <p class="impressum-legal">
+            Angaben gemäß § 5 TMG &nbsp;·&nbsp;
+            Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV: Vorstand des Traditionsverein Werben im Spreewald e.&nbsp;V.<br>
+            Haftungshinweis: Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links.
+        </p>
+    </div>
+</div>
+
+<!-- ══ Footer ══ -->
+<footer>
+    &copy; 2026 Traditionsverein Werben im Spreewald e.&nbsp;V. &nbsp;·&nbsp; Alle Rechte vorbehalten.
+</footer>
+
+<script>
+    /* ── Mobile navigation ── */
+    function toggleMenu() {
+        document.getElementById('nav-menu').classList.toggle('open');
+    }
+    document.querySelectorAll('#nav-menu a').forEach(a => {
+        a.addEventListener('click', () => {
+            document.getElementById('nav-menu').classList.remove('open');
+        });
+    });
+
+    /* ── Events: load and parse termine.md ── */
+    const MONTH_NAMES = ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+
+    function parseEventMarkdown(text) {
+        const blocks = text.split(/\n---+\n?/).filter(b => b.trim());
+        const events = [];
+
+        for (const block of blocks) {
+            const lines = block.split('\n');
+            let title = '';
+            const meta = {};
+            const descriptionLines = [];
+            let inMeta = false;
+            let inDescription = false;
+
+            for (const line of lines) {
+                if (line.startsWith('# ') && !line.startsWith('## ')) continue; // skip top-level heading
+                if (line.startsWith('## ')) {
+                    title = line.slice(3).trim();
+                    inMeta = true;
+                    continue;
+                }
+                if (inMeta && !inDescription) {
+                    const match = line.match(/^([^:]+):\s*(.+)/);
+                    if (match) {
+                        meta[match[1].toLowerCase().trim()] = match[2].trim();
+                    } else if (line.trim() === '') {
+                        inDescription = true;
+                    }
+                    continue;
+                }
+                if (inDescription) descriptionLines.push(line);
+            }
+
+            if (title) events.push({ title, ...meta, description: descriptionLines.join('\n').trim() });
+        }
+
+        return events;
+    }
+
+    function renderEventCard(event) {
+        let day = '', month = '', year = '';
+        if (event.datum) {
+            const parts = event.datum.split('.');
+            if (parts.length === 3) {
+                day   = String(parseInt(parts[0], 10));
+                month = MONTH_NAMES[parseInt(parts[1], 10) - 1] ?? '';
+                year  = parts[2];
+            }
+        }
+
+        const badge = [event.kategorie, event.eintritt].filter(Boolean).join(' &nbsp;·&nbsp; ');
+        const metaLine = [event.zeit, event.ort].filter(Boolean).join(' &nbsp;·&nbsp; ');
+
+        return `
+            <div class="event-card">
+                <div class="event-date-box">
+                    <span class="day">${day}</span>
+                    <span class="month">${month}</span>
+                    <span class="year">${year}</span>
+                </div>
+                <div class="event-content">
+                    ${badge ? `<span class="event-badge">${badge}</span>` : ''}
+                    <h3>${event.title}</h3>
+                    ${metaLine ? `<p class="event-meta">${metaLine}</p>` : ''}
+                    <p>${event.description}</p>
+                </div>
+            </div>`;
+    }
+
+    async function loadEvents() {
+        const container = document.getElementById('event-list');
+        try {
+            const response = await fetch('termine.md');
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const text = await response.text();
+            const events = parseEventMarkdown(text);
+            container.innerHTML = events.length
+                ? events.map(renderEventCard).join('')
+                : '<p style="font-family:Arial,sans-serif;color:#888;">Aktuell sind keine Termine geplant.</p>';
+        } catch (err) {
+            console.error('Error loading events:', err);
+            container.innerHTML = '<p style="font-family:Arial,sans-serif;color:#888;">Termine konnten nicht geladen werden.</p>';
+        }
+    }
+
+    loadEvents();
+
+    /* ── Contact form → mailto ── */
+    function submitForm(e) {
+        e.preventDefault();
+        const name     = document.getElementById('name').value.trim();
+        const email    = document.getElementById('email').value.trim();
+        const subject = document.getElementById('betreff').value.trim() || 'Kontaktanfrage vom Verein-Website';
+        const message = document.getElementById('nachricht').value.trim();
+
+        if (!name || !email || !message) return;
+
+        const body = `Name: ${name}\nE-Mail: ${email}\n\n${message}`;
+
+        // Recipient email address
+        const recipient = 'traditionsvereinwerben@gmail.com';
+
+        window.location.href =
+            `mailto:${recipient}` +
+            `?subject=${encodeURIComponent(subject)}` +
+            `&body=${encodeURIComponent(body)}`;
+
+        document.getElementById('form-success').style.display = 'block';
+        document.getElementById('contact-form').reset();
+    }
+</script>
+
+</body>
+</html>
