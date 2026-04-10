@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Traditionsverein Werben im Spreewald e.V.</title>
+    <script>
+        if (sessionStorage.getItem('auth') !== '1') {
+            document.addEventListener('DOMContentLoaded', function () {
+                document.getElementById('pw-overlay').style.display = 'flex';
+            });
+        }
+    </script>
     <style>
         :root {
             --green-dark: #2d5a27;
@@ -680,6 +687,22 @@
     </div>
 </div>
 
+<!-- ══ Password overlay ══ -->
+<div id="pw-overlay" style="display:none;position:fixed;inset:0;background:rgba(30,60,25,0.97);z-index:9999;align-items:center;justify-content:center;flex-direction:column;font-family:Arial,sans-serif;">
+    <div style="background:#f5f0e8;border-radius:12px;padding:2.5rem 2rem;max-width:360px;width:90%;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,0.4);">
+        <div style="font-size:2rem;margin-bottom:0.5rem;">🌿</div>
+        <h2 style="color:#2d5a27;margin-bottom:0.3rem;font-size:1.2rem;">Traditionsverein Werben</h2>
+        <p style="color:#666;font-size:0.85rem;margin-bottom:1.5rem;">Bitte Passwort eingeben</p>
+        <input id="pw-input" type="password" placeholder="Passwort" onkeydown="if(event.key==='Enter')checkPassword()"
+            style="width:100%;padding:0.7rem 1rem;border:2px solid #ccc;border-radius:6px;font-size:1rem;outline:none;box-sizing:border-box;">
+        <div id="pw-error" style="color:#c0392b;font-size:0.82rem;margin-top:0.5rem;min-height:1.2em;"></div>
+        <button onclick="checkPassword()"
+            style="margin-top:1rem;width:100%;padding:0.75rem;background:#2d5a27;color:white;border:none;border-radius:6px;font-size:1rem;cursor:pointer;">
+            Einloggen
+        </button>
+    </div>
+</div>
+
 <!-- ══ Lightbox ══ -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
     <span class="lightbox-close" title="Schließen">&times;</span>
@@ -693,6 +716,18 @@
 </footer>
 
 <script>
+    /* ── Password protection ── */
+    function checkPassword() {
+        if (document.getElementById('pw-input').value === 'tvw2026') {
+            sessionStorage.setItem('auth', '1');
+            document.getElementById('pw-overlay').style.display = 'none';
+        } else {
+            document.getElementById('pw-error').textContent = 'Falsches Passwort.';
+            document.getElementById('pw-input').value = '';
+            document.getElementById('pw-input').focus();
+        }
+    }
+
     /* ── Mobile navigation ── */
     function toggleMenu() {
         document.getElementById('nav-menu').classList.toggle('open');
