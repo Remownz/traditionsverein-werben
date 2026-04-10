@@ -7,7 +7,10 @@
     <script>
         if (sessionStorage.getItem('auth') !== '1') {
             document.addEventListener('DOMContentLoaded', function () {
-                document.getElementById('pw-overlay').style.display = 'flex';
+                document.body.style.visibility = 'hidden';
+                const overlay = document.getElementById('pw-overlay');
+                overlay.style.display = 'flex';
+                overlay.style.visibility = 'visible';
             });
         }
     </script>
@@ -721,6 +724,7 @@
         if (document.getElementById('pw-input').value === 'tvw2026') {
             sessionStorage.setItem('auth', '1');
             document.getElementById('pw-overlay').style.display = 'none';
+            document.body.style.visibility = 'visible';
         } else {
             document.getElementById('pw-error').textContent = 'Falsches Passwort.';
             document.getElementById('pw-input').value = '';
